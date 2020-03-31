@@ -1,8 +1,8 @@
-require("dotenv").config();
-const mongoose = require("mongoose");
-var uniqueValidator = require("mongoose-unique-validator");
+require('dotenv').config()
+const mongoose = require('mongoose')
+var uniqueValidator = require('mongoose-unique-validator')
 
-const url = process.env.MONGODB_URI;
+const url = process.env.MONGODB_URI
 
 mongoose
   .connect(url, {
@@ -11,11 +11,11 @@ mongoose
     useCreateIndex: true
   })
   .then(result => {
-    console.log("connected to MongoDB");
+    console.log('connected to MongoDB:' + result)
   })
   .catch(error => {
-    console.log("error connecting to MongoDB:", error.message);
-  });
+    console.log('error connecting to MongoDB:', error.message)
+  })
 
 const phonebookSchema = new mongoose.Schema({
   name: {
@@ -27,15 +27,15 @@ const phonebookSchema = new mongoose.Schema({
     type: String,
     required: true
   }
-});
-phonebookSchema.plugin(uniqueValidator);
+})
+phonebookSchema.plugin(uniqueValidator)
 
-phonebookSchema.set("toJSON", {
+phonebookSchema.set('toJSON', {
   transform: (document, returnedObject) => {
-    returnedObject.id = returnedObject._id.toString();
-    delete returnedObject._id;
-    delete returnedObject.__v;
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
   }
-});
+})
 
-module.exports = mongoose.model("Person", phonebookSchema);
+module.exports = mongoose.model('Person', phonebookSchema)
